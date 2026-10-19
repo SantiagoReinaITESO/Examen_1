@@ -6,7 +6,7 @@
  */
 
 #include "MRT.h"
-#include "fsl_mrt.h"
+#include <fsl_mrt.h>
 #include "frdm_hardware.h"
 #include "NVIC.h"
 
@@ -18,6 +18,8 @@ static mrt_callback_t g_mrt_callback = (mrt_callback_t)0;
 
 // Saber si el MRT ya fue inicializado
 static uint8_t g_iniciado = 0U;
+
+static uint16_t g_time = 0;
 
 // Contadores para periodos largos
 static volatile uint32_t g_total_interrupciones = 7U;
@@ -137,8 +139,12 @@ void MRT_config_Hz(uint32_t frequency_hz)
     MRT_config_ticks(ticks);
 }
 
-
-void MRT_7seg(uint8_t time)
+void mrt_delay_ms(uint32_t ms)
 {
+    MRT_config_ms (ms);
+}
 
+void get_time (void)
+{
+    
 }

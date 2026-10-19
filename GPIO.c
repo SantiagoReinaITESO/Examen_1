@@ -189,7 +189,7 @@ void GPIO_SW_callback(uint32_t pin)
 	}
 	else if (pin == GPIO_BUTTON_SW3)
 	{
-		RGB_black(); // Apagar todos los LEDs (negro)
+		RGB_off(); // Apagar todos los LEDs (negro)
 	}
 }
 

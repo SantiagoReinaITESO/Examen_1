@@ -26,4 +26,7 @@ void MRT_config_us(uint32_t period_us);
 // Configurar el MRT en Hertz
 void MRT_config_Hz(uint32_t frequency_hz);
 
+void mrt_delay_ms(uint32_t ms);
+
+void MRT_get_time(void);
 #endif /* MRT_H_ */
