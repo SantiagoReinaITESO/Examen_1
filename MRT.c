@@ -20,7 +20,7 @@ static mrt_callback_t g_mrt_callback = (mrt_callback_t)0;
 static uint8_t g_iniciado = 0U;
 
 // Contadores para periodos largos
-static volatile uint32_t g_total_interrupciones = 1U;
+static volatile uint32_t g_total_interrupciones = 7U;
 static volatile uint32_t g_interrupciones = 0U;
 
 
@@ -135,4 +135,10 @@ void MRT_config_Hz(uint32_t frequency_hz)
     uint64_t ticks = ((uint64_t)clock_hz + (frequency_hz / 2U)) / frequency_hz;
 
     MRT_config_ticks(ticks);
+}
+
+
+void MRT_7seg(uint8_t time)
+{
+
 }

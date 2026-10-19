@@ -33,6 +33,6 @@ void GPIO_config_SW(void);
 
 // Registrar el callback de los botones
 void GPIO_register_callback(gpio_callback_t callback);
-
+void GPIO_SW_callback(uint32_t pin);
 
 #endif /* GPIO_H_ */
