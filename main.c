@@ -16,16 +16,18 @@ int main(void)
     RGB_init();
     GPIO_config_SW();
 
-    // Registrar callback y configurar MRT
-    GPIO_register_callback(GPIO_SW_callback);
-
+    // Configurar el MRT cada 1 ms
     MRT_config_Hz(1000U);
+
+    // Inicializar la maquina de estados
+    COOR_Inicio();
+
+    // Habilitar las interrupciones GPIO
+    NVIC_enable_interrupt_and_priotity(NVIC_GPIO00_IRQn, PRIORITY_4);
 
     while(1)
     {
-        COOR_Inicio();
-        COOR_Procesar(SW2_PIN);
-        COOR_PRocesar_sw3(SW3_PIN);
+        COOR_Procesar();
     }
 
     return 0;

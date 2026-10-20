@@ -10,8 +10,29 @@
 
 #include <stdint.h>
 
+
+// Tiempos
+#define TIEMPO_BLANCO_MS    (1000U)
+#define TIEMPO_VERDE_MS     (1000U)
+#define TIEMPO_CONTEO_MS    (7000U)
+#define ANTIRREBOTE_MS     (50U)
+
+typedef enum
+{
+    EST_ESPERAR_INICIO,
+    EST_BLANCO_1,
+    EST_APAGADO_1,
+    EST_BLANCO_2,
+    EST_APAGADO_2,
+    EST_ESPERAR_SW2,
+    EST_VERDE,
+    EST_CONTAR_SW3,
+    EST_MOSTRAR_COLOR
+
+} estado_t;
+
 void COOR_Inicio(void);
-void COOR_Procesar(uint32_t pin);
-void COOR_PRocesar_sw3(uint16_t pin);
+// Procesar el estado actual
+void COOR_Procesar(void);
 
 #endif /* COORDINADOR_H_ */

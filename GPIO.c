@@ -13,7 +13,6 @@
 
 static gpio_callback_t gpio_callback = (gpio_callback_t)0;
 
-uint16_t g_SW3_PUSH = 0;
 
 void GPIO_register_callback(gpio_callback_t callback)
 {
@@ -45,25 +44,19 @@ void GPIO00_IRQHandler(void)
         GPIO_PinClearInterruptFlag(GPIO0, SW3_PIN);
     }
 
-    // Identificar el boton que genero la interrupcion
-    if(status_sw2 && status_sw3)
-    {
-        buttons = GPIO_BUTTON_BOTH;
-    }
-    else if(status_sw2)
-    {
-        buttons = GPIO_BUTTON_SW2;
-    }
-    else if(status_sw3)
-    {
-        buttons = GPIO_BUTTON_SW3;
-    }
-
-    // Ejecutar el callback
-    if((GPIO_BUTTON_NONE != buttons) && (gpio_callback))
-    {
-        gpio_callback(buttons);
-    }
+	// Avisar que boton fue presionado
+	if(gpio_callback != (gpio_callback_t)0)
+	{
+	    if(status_sw2)
+	    {
+	        gpio_callback(GPIO_BUTTON_SW2);
+	    }
+	
+	    if(status_sw3)
+	    {
+	        gpio_callback(GPIO_BUTTON_SW3);
+	    }
+	}
 }
 
 
@@ -170,37 +163,4 @@ void GPIO_config_SW(void)
 		// Limpiar posibles interrupciones anteriores
 		GPIO_PinClearInterruptFlag(GPIO0, SW2_PIN);
 		GPIO_PinClearInterruptFlag(GPIO0, SW3_PIN);
-}
-
-void GPIO_SW_callback(uint32_t pin)
-{
-	// Verificar qué botón fue presionado y realizar la acción correspondiente
-	if (pin == GPIO_BUTTON_SW2)
-	{
-		RGB_white(); // Encender todos los LEDs (blanco)
-		mrt_delay_ms(500); // Esperar 500 ms
-		RGB_off(); // Apagar todos los LEDs (negro)
-
-		mrt_delay_ms(500); // Esperar 500 ms
-
-		RGB_white(); // Encender todos los LEDs (blanco)
-		mrt_delay_ms(500); // Esperar 500 ms
-		RGB_off(); // Apagar todos los LEDs (negro)
-	}
-	else if (pin == GPIO_BUTTON_SW3)
-	{
-		RGB_off(); // Apagar todos los LEDs (negro)
-	}
-}
-
-uint16_t GPIO_coun_SW3 (uint32_t pin)
-{
-	uint16_t SW3_PUSH = g_SW3_PUSH;
-
-	if (pin == GPIO_BUTTON_SW3)
-	{
-		SW3_PUSH ++;
-	}
-	return SW3_PUSH;
-
 }

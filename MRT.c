@@ -19,7 +19,7 @@ static mrt_callback_t g_mrt_callback = (mrt_callback_t)0;
 // Saber si el MRT ya fue inicializado
 static uint8_t g_iniciado = 0U;
 
-static uint16_t g_time = 0;
+static volatile uint32_t g_time_ms = 0U;
 
 // Contadores para periodos largos
 static volatile uint32_t g_total_interrupciones = 7U;
@@ -44,6 +44,8 @@ void MRT0_IRQHandler(void)
         if (g_interrupciones >= g_total_interrupciones)
         {
             g_interrupciones = 0U;
+
+            g_time_ms++;
 
             if (g_mrt_callback != (mrt_callback_t)0)
             {
@@ -139,12 +141,14 @@ void MRT_config_Hz(uint32_t frequency_hz)
     MRT_config_ticks(ticks);
 }
 
-void mrt_delay_ms(uint32_t ms)
+// GET: Obtener el tiempo transcurrido
+uint32_t MRT_get_time_ms(void)
 {
-    MRT_config_ms (ms);
+    return g_time_ms;
 }
 
-void get_time (void)
+// SET: Establecer el tiempo
+void MRT_set_time_ms(uint32_t time_ms)
 {
-    
+    g_time_ms = time_ms;
 }

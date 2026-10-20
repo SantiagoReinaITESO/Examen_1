@@ -28,5 +28,9 @@ void MRT_config_Hz(uint32_t frequency_hz);
 
 void mrt_delay_ms(uint32_t ms);
 
-void MRT_get_time(void);
+
+uint32_t MRT_get_time_ms(void);
+
+void MRT_set_time_ms(uint32_t time_ms);
+
 #endif /* MRT_H_ */
